@@ -3,3 +3,4 @@ torchvision>=0.15.2
 pillow>=9.4.0
 numpy>=1.26.4
 matplotlib
+scikit-build-core>=0.10.7
