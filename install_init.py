@@ -203,7 +203,7 @@ def log(message, type=None, always=False, name=None):
     if name is None:
         name = get_extension_config()["name"]
 
-    print(f"(levelpixel-nodes:{name}) {message}")
+    print(f"(levelpixel-advanced-nodes:{name}) {message}")
 
 def get_ext_dir(subpath=None, mkdir=False):
     dir = os.path.dirname(__file__)
@@ -221,8 +221,8 @@ def get_extension_config(reload=False):
     if reload == False and config is not None:
         return config
 
-    config_path = get_ext_dir("levelpixel.json")
-    default_config_path = get_ext_dir("levelpixel.default.json")
+    config_path = get_ext_dir("levelpixeladvanced.json")
+    default_config_path = get_ext_dir("levelpixeladvanced.default.json")
     if not os.path.exists(config_path):
         if os.path.exists(default_config_path):
             shutil.copy(default_config_path, config_path)
@@ -232,7 +232,7 @@ def get_extension_config(reload=False):
                 return {"name": "Unknown", "version": -1}
     
         else:
-            log("Missing levelpixel.default.json, this extension may not work correctly. Please reinstall the extension.",
+            log("Missing levelpixeladvanced.default.json, this extension may not work correctly. Please reinstall the extension.",
                 type="ERROR", always=True, name="???")
             print(f"Extension path: {get_ext_dir()}")
             return {"name": "Unknown", "version": -1}
@@ -304,7 +304,7 @@ def install_js():
 def get_web_ext_dir():
     config = get_extension_config()
     name = config["name"]
-    dir = get_comfy_dir("web/extensions/levelpixel")
+    dir = get_comfy_dir("web/extensions/levelpixeladvanced")
     if not os.path.exists(dir):
         os.makedirs(dir)
     dir = os.path.join(dir, name)
