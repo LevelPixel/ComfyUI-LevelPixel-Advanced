@@ -1,0 +1,11 @@
+{
+    "LLM Loader [LP]":"Loads a large language model specified by the user. Models are stored in the LLavacheckpoints folder.",
+    "LLM Sampler [LP]":"Generates text using the LLM. Simple settings.",
+    "LLM Advanced [LP]":"Generates text using the LLM. Advanced settings.",
+    "LLava Loader [LP]":"Loads a visual large language model specified by the user. Models are stored in the LLavacheckpoints folder.",
+    "LLava Clip Loader [LP]":"Loads a CLIP model specified by the user for VLM model. Models are stored in the LLavacheckpoints folder.",
+    "LLava Sampler Simple [LP]":"Generates text using the VLM. Simple settings.",
+    "LLava Sampler Advanced [LP]":"Generates text using the VLM. Advanced settings.",
+    "LLava Simple [LP]":"Generates text using the loaded VLM from LLava Loader. Simple settings.",
+    "LLava Advanced [LP]":"Generates text using the loaded VLM from LLava Loader. Advanced settings."
+}

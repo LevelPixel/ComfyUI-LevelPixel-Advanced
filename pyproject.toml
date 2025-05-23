@@ -1,0 +1,14 @@
+[project]
+name = "comfyui-level-pixel-advanced"
+description = "Various advanced nodes of the Level Pixel company. Includes convenient advanced nodes for working with LLM и VLM models."
+version = "1.2.0"
+license = { file = "LICENSE" }
+dependencies = ["torch>=2.0.1", "torchvision>=0.15.2", "transformers>=4.46", "pillow>=9.4.0", "numpy>=1.26.4", "matplotlib"]
+
+[project.urls]
+Repository = "https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced"
+
+[tool.comfy]
+PublisherId = "Level Pixel"
+DisplayName = "ComfyUI Level Pixel Advanced"
+Icon = ""
