@@ -66,9 +66,9 @@ If you have problems running ComfyUI with this node package, check and do the fo
 * The path to the current version of your CUDA must be at the very top of the **Path** list in the **System environment variables** (right after Cmake). Make sure that the path is at the top of the Path in the System variables, and not only in the user variables.
   Here are the paths that should be in Path for CUDA (this is an example, substitute your CUDA version for "12.9"):
 
-  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`
+  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`\
   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\bin`
-* In System environment variables, add the `CMAKE_ARGS` variable and set it to the following:
+* In System environment variables, add the `CMAKE_ARGS` variable and set it to the following:\
   `-DGGML_CUDA=on -DCMAKE_GENERATOR_TOOLSET='cuda=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9'`
 
 Save the changes made to System environment variables.
