@@ -36,7 +36,9 @@ init()
 
 node_list = [
     "llm.llm_LP",
-    "vlm.llava_LP",    
+    "vlm.autotagger_LP",
+    "vlm.llava_LP",
+    "vlm.ram_LP",
 ]
 
 NODE_CLASS_MAPPINGS = {}

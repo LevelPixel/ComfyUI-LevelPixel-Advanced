@@ -4,3 +4,6 @@ pillow>=9.4.0
 numpy>=1.26.4
 matplotlib
 scikit-build-core>=0.10.7
+onnxruntime-gpu>=1.20.0
+onnxruntime>=1.20.0
+ram @ git+https://github.com/xinyu1205/recognize-anything.git
