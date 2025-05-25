@@ -9,6 +9,6 @@ dependencies = ["torch>=2.0.1", "torchvision>=0.15.2", "transformers>=4.46", "pi
 Repository = "https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced"
 
 [tool.comfy]
-PublisherId = "LevelPixel"
+PublisherId = "levelpixel"
 DisplayName = "ComfyUI Level Pixel Advanced"
 Icon = ""
