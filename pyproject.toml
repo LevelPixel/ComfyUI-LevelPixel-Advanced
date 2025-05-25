@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-levelpixel-advanced"
-description = "Advanced nodes of the Level Pixel company. Includes convenient advanced nodes for working with LLM и VLM models (LLaVa) with GGUF format. Qwen2.5-VL and Qwen2.5 supported. Also included is a node for the RAM model. Nodes have the ability to automatically unload models from VRAM."
-version = "1.2.0"
+description = "Advanced nodes of the Level Pixel company (levelpixel, LP). Includes convenient advanced nodes for working with LLM и VLM models (LLaVa) with GGUF format. Qwen2.5-VL and Qwen2.5 supported. Also included is a node for the RAM model. Nodes have the ability to automatically unload models from VRAM."
+version = "1.2.1"
 license = { file = "LICENSE" }
 dependencies = ["torch>=2.0.1", "torchvision>=0.15.2", "transformers>=4.46", "pillow>=9.4.0", "numpy>=1.26.4", "matplotlib", "scikit-build-core>=0.10.7", "onnxruntime-gpu>=1.20.0", "onnxruntime>=1.20.0", "timm>=0.4.12", "fairscale>=0.4.4"]
 
