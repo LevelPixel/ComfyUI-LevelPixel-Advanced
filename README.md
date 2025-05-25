@@ -28,7 +28,7 @@ Before running ComfyUI with this node package, you should make sure that you hav
 
 * `CUDA drivers` - install the latest version.\
   Download: [https://developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads)
-* `Visual Studio 2022 Community IDE` with libraries for compiling C++ programs, specifically with individual components (select them in Visual Studio Installer when installing/modifying Visual Studio 2022):
+* `Visual Studio 2022 Community IDE` with libraries for compiling C++ programs, specifically with individual components (select them in Visual Studio Installer when installing/modifying Visual Studio 2022):\
   MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)\
   MSVC v143 - VS 2022 C++ x64/x86 build tools (v14.38-17.8)\
   C++ Cmake tools for Windows\
