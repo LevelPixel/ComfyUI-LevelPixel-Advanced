@@ -6,4 +6,6 @@ matplotlib
 scikit-build-core>=0.10.7
 onnxruntime-gpu>=1.20.0
 onnxruntime>=1.20.0
+timm>=0.4.12
+fairscale>=0.4.4
 ram @ git+https://github.com/xinyu1205/recognize-anything.git

@@ -1,4 +1,5 @@
 {
+    "Autotagger [LP]":"Autotagger based on the latest version of the WD tagging model from SmilingWolf.",
     "LLM Loader [LP]":"Loads a large language model specified by the user. Models are stored in the LLavacheckpoints folder.",
     "LLM Sampler [LP]":"Generates text using the LLM. Simple settings.",
     "LLM Advanced [LP]":"Generates text using the LLM. Advanced settings.",
@@ -7,5 +8,6 @@
     "LLava Sampler Simple [LP]":"Generates text using the VLM. Simple settings.",
     "LLava Sampler Advanced [LP]":"Generates text using the VLM. Advanced settings.",
     "LLava Simple [LP]":"Generates text using the loaded VLM from LLava Loader. Simple settings.",
-    "LLava Advanced [LP]":"Generates text using the loaded VLM from LLava Loader. Advanced settings."
+    "LLava Advanced [LP]":"Generates text using the loaded VLM from LLava Loader. Advanced settings.",
+    "Recognize Anything (RAM) [LP]":"Recognize Anything (RAM) - node for generating tags for an image using the Recognize Anything Plus Model"
 }

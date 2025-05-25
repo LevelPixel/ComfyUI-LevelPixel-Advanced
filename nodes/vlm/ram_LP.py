@@ -105,9 +105,9 @@ class RecognizeAnything:
         return(tag0, tag1, tag2,)
 
 NODE_CLASS_MAPPINGS = {
-    "Recognize Anything|LP": RecognizeAnything,
+    "RecognizeAnything(RAM)|LP": RecognizeAnything,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
-    "Recognize Anything|LP": "Recognize Anything [LP]",
+    "RecognizeAnything(RAM)|LP": "Recognize Anything (RAM) [LP]",
 }
