@@ -85,7 +85,7 @@ If these tips don't help - study the logs and the cause of the error, and then t
 
 All nodes Level Pixel:
 
-<img width="1171" alt="level-pixel-nodes_2" src="https://github.com/user-attachments/assets/1a41469d-e29a-474a-8481-da9f3f3e5148">
+<img width="1171" alt="level-pixel-nodes_2" src="https://github.com/user-attachments/assets/78948649-daac-44be-b8db-9d7e0d8f9b01">
 
 ## LLM nodes
 
