@@ -5,8 +5,7 @@ import numpy as np
 import csv
 import os
 import sys
-import onnxruntime as ort
-from onnxruntime import InferenceSession
+
 from PIL import Image
 from server import PromptServer
 from aiohttp import web
@@ -262,9 +261,6 @@ if not os.path.exists(models_dir):
 
 known_models = list(config_autotagger["models"].keys())
 
-#log("Available ORT providers: " + ", ".join(ort.get_available_providers()), "DEBUG", True)
-#log("Using ORT providers: " + ", ".join(defaults["ortProviders"]), "DEBUG", True)
-
 def get_installed_models():
     models = filter(lambda x: x.endswith(".onnx"), os.listdir(models_dir))
     models = [m for m in models if os.path.exists(os.path.join(models_dir, os.path.splitext(m)[0] + ".csv"))]
@@ -278,6 +274,7 @@ async def tag(image, model_name, threshold=0.35, character_threshold=0.85, exclu
         await download_model(model_name, client_id, node)
 
     name = os.path.join(models_dir, model_name + ".onnx")
+    from onnxruntime import InferenceSession
     model = InferenceSession(name, providers=defaults["ortProviders"])
 
     input = model.get_inputs()[0]

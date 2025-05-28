@@ -9,6 +9,9 @@ import re
 import inspect
 from requests import get
 from server import PromptServer
+import subprocess
+import sys
+from importlib import metadata
 
 def verify_python_support():
     version = tuple(map(int, platform.python_version_tuple()[:2]))
@@ -324,6 +327,52 @@ def get_comfy_dir(subpath=None, mkdir=False):
 def should_install_js():
     return not hasattr(PromptServer.instance, "supports") or "custom_nodes_from_web" not in PromptServer.instance.supports
 
+def has_nvidia_cuda():
+    try:
+        output = subprocess.check_output(
+            ['nvidia-smi', '--query-gpu=name', '--format=csv,noheader'],
+            stderr=subprocess.DEVNULL,
+            encoding='utf-8'
+        ).strip()
+        return bool(output)
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return False
+
+def is_installed(pkg_name: str, min_version: str = '') -> bool:
+    try:
+        ver = metadata.version(pkg_name)
+        if min_version:
+            return tuple(map(int, ver.split('.'))) >= tuple(map(int, min_version.split('.')))
+        return True
+    except metadata.PackageNotFoundError:
+        return False
+
+def install(pkg_spec: str):
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', pkg_spec])
+
+def uninstall(pkg: str):
+    subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', '-y', pkg])
+
+def install_onnxruntime():
+    gpu = has_nvidia_cuda()
+    print(f"Found NVIDIA GPU: {gpu}")
+    if gpu:
+        if is_installed('onnxruntime'):
+            #uninstall("onnxruntime")
+            print(f"LP >>> Your python has the 'onnxruntime' library installed, although your computer supports 'onnxruntime-gpu'.")
+            print(f"LP >>> Solution: If other node packages do not use the 'onnxruntime' library, then remove the 'onnxruntime' library for your python.")
+            print(f"LP >>> Close ComfyUI and run the script at .\\ComfyUI\\custom_nodes\\ComfyUI-LevelPixel-Advanced\\scripts\\remove_onnxruntime.bat")
+        if not is_installed('onnxruntime-gpu'):
+            install("onnxruntime-gpu>=1.22")
+    else:
+        if is_installed('onnxruntime-gpu'):
+            #uninstall("onnxruntime-gpu")
+            print(f"LP >>> Your python has the 'onnxruntime-gpu' library installed, but you don't have a GPU.")
+            print(f"LP >>> Solution: If other node packages do not use the 'onnxruntime-gpu' library, then remove the 'onnxruntime-gpu' library for your python.")
+            print(f"LP >>> Close ComfyUI and run the script at .\\ComfyUI\\custom_nodes\\ComfyUI-LevelPixel-Advanced\\scripts\\remove_onnxruntime.bat")
+        if not is_installed('onnxruntime'):
+            install("onnxruntime>=1.22")
+
 def init(check_imports=None):
     log("Init")
 
@@ -337,4 +386,5 @@ def init(check_imports=None):
                 return False
 
     install_js()
+    install_onnxruntime()
     return True
