@@ -18,7 +18,7 @@ except:
         os.mkdir(os.path.join(folder_paths.models_dir, "LLavacheckpoints"))
         
     folder_paths.folder_names_and_paths["LLavacheckpoints"] = ([os.path.join(folder_paths.models_dir, "LLavacheckpoints")], supported_LLava_extensions)
-    
+
 class LLavaLoader:
     @classmethod
     def INPUT_TYPES(s):
@@ -290,21 +290,20 @@ class LLavaAdvanced:
     def generate_text_full_advanced(self, ckpt_name, clip_name, max_ctx, gpu_layers, n_threads, image, 
                                     system_msg, prompt, max_tokens, temperature, top_p, top_k, frequency_penalty, 
                                     presence_penalty, repeat_penalty, seed, unload):
-
+        
         clip_path = folder_paths.get_full_path("LLavacheckpoints", clip_name)
         self.clip = Llava16ChatHandler(clip_model_path=clip_path, verbose=False)
-
+        
         ckpt_path = folder_paths.get_full_path("LLavacheckpoints", ckpt_name)
         self.llm = Llama(model_path = ckpt_path, chat_handler=self.clip, offload_kqv=True, f16_kv=True, 
-                         use_mlock=False, embedding=False, n_batch=1024, last_n_tokens_size=1024, 
-                         verbose=True, seed=42, n_ctx = max_ctx, n_gpu_layers=gpu_layers, n_threads=n_threads, 
-                         logits_all=True, echo=False)
-
+                        use_mlock=False, embedding=False, n_batch=1024, last_n_tokens_size=1024, 
+                        verbose=True, seed=42, n_ctx = max_ctx, n_gpu_layers=gpu_layers, n_threads=n_threads, 
+                        logits_all=True, echo=False)
+        
         pil_image = ToPILImage()(image[0].permute(2, 0, 1))
 
         buffer = BytesIO()
         pil_image.save(buffer, format="PNG")
-
 
         image_bytes = buffer.getvalue()
 
@@ -347,6 +346,129 @@ class LLavaAdvanced:
             torch.cuda.empty_cache()
 
         return (f"{response['choices'][0]['message']['content']}", )
+    
+class MultimodalGeneratorAdvanced:
+    def __init__(self):
+        self.llm = None
+        self.clip = None
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        return {
+            "required": {
+                "image": ("IMAGE",),
+                "ckpt_name": (folder_paths.get_filename_list("LLavacheckpoints"), ),
+                "clip_name": (folder_paths.get_filename_list("LLavacheckpoints"), ),
+                "max_ctx": ("INT", {"default": 4096, "min": 128, "max": 128000, "step": 64}),
+                "gpu_layers": ("INT", {"default": 27, "min": 0, "max": 100, "step": 1}),
+                "n_threads": ("INT", {"default": 8, "min": 1, "max": 100, "step": 1}),
+                "max_tokens": ("INT", {"default": 512, "min": 1, "max": 2048, "step": 1}),
+                "temperature": ("FLOAT", {"default": 0.1, "min": 0.01, "max": 1.0, "step": 0.01}),
+                "top_p": ("FLOAT", {"default": 0.95, "min": 0.1, "max": 1.0, "step": 0.01}),
+                "top_k": ("INT", {"default": 40, "step": 1}),
+                "frequency_penalty": ("FLOAT", {"default": 0.0, "step": 0.01}),
+                "presence_penalty": ("FLOAT", {"default": 0.0, "step": 0.01}),
+                "repeat_penalty": ("FLOAT", {"default": 1.1, "step": 0.01}),
+                "seed": ("INT", {"default": 42, "step": 1}),
+                #"unload": ("BOOLEAN", {"default": False}),
+                "prompt": ("STRING", {"multiline": True,  "default": ""}),
+                #"system_msg": ("STRING", {"multiline": True, "default": "You are an assistant who perfectly describes images."}),
+            }
+        }
+
+    RETURN_TYPES = ("STRING",)
+    FUNCTION = "multimodal_generator_advanced"
+    CATEGORY = "LevelPixel/VLM"
+
+    def multimodal_generator_advanced(self, ckpt_name, clip_name, max_ctx, gpu_layers, n_threads, image, 
+                                    #system_msg, 
+                                    prompt, max_tokens, temperature, top_p, top_k, frequency_penalty, 
+                                    presence_penalty, repeat_penalty, seed): #, unload):
+
+        clip_path = folder_paths.get_full_path("LLavacheckpoints", clip_name)
+        ckpt_path = folder_paths.get_full_path("LLavacheckpoints", ckpt_name)
+
+        import tempfile
+
+        pil_image = ToPILImage()(image[0].permute(2, 0, 1))
+
+        buffer = BytesIO()
+        pil_image.save(buffer, format="PNG")
+
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as tmp:
+            temp_image_path = tmp.name
+            pil_image.save(temp_image_path)
+
+        import subprocess
+        from pathlib import Path
+
+        relative_cli_path="llama-mtmd-cli\\llama-mtmd-cli.exe"
+        cli = Path(__file__).parent / relative_cli_path
+        if not cli.is_file():
+            raise FileNotFoundError(f"""Library llama-mtmd-cli.exe not founded: {cli}
+                                    
+                SOLUTION:
+
+                To make this node work, you need to download the Llama.cpp libraries manually from this link:
+                https://github.com/ggml-org/llama.cpp/releases
+
+                Download the archive that suits your system. Probably, for you it will be llama-b5317-bin-win--cu12.4-x64.zip
+
+                After downloading, go to the path:
+                ComfyUI\\custom_nodes\\ComfyUI-LevelPixel-Advanced\\nodes\\vlm\\llama-mtmd-cli
+
+                And unzip the downloaded archive here.
+
+                The llama-mtmd-cli folder should contain the llama-mtmd-cli.exe file and other libraries from the archive.
+
+                After that, run the generation again.""")
+
+        cmd = [
+            str(cli),
+            '-m', ckpt_path,
+            '--mmproj', clip_path,
+            '-p', prompt,
+            '--image', temp_image_path,
+            '--ctx-size', max_ctx,
+            '--gpu-layers', gpu_layers,
+            '--threads', n_threads,
+            '--n-predict', max_tokens,
+            '--temp', temperature,
+            '--top-p', top_p,
+            '--top-k', top_k,
+            '--frequency-penalty', frequency_penalty,
+            '--presence-penalty', presence_penalty,
+            '--repeat-penalty', repeat_penalty,
+            '--seed', seed,
+            #'-sys', system_msg
+        ]
+
+        cmd = [str(x) for x in cmd]
+
+        print(cmd)
+
+        print("Generate by llama-mtmd-cli")
+        result = subprocess.run(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=True
+        )
+
+        output = result.stdout.decode('utf-8').strip()
+
+        def parse_output(output: str) -> str:
+            lines = output.strip().splitlines()
+            if len(lines) > 1:
+                return '\n'.join(lines[1:]).strip()
+            return output.strip()
+
+        clean_output = parse_output(output)
+
+        if os.path.exists(temp_image_path):
+            os.remove(temp_image_path)
+
+        return (clean_output, )
 
 NODE_CLASS_MAPPINGS = {
     "LLavaLoader|LP": LLavaLoader,
@@ -355,6 +477,7 @@ NODE_CLASS_MAPPINGS = {
     "LLavaSamplerAdvanced|LP": LLavaSamplerAdvanced,
     "LLavaSimple|LP": LLavaSimple,
     "LLavaAdvanced|LP": LLavaAdvanced,
+    "MultimodalGeneratorAdvanced|LP": MultimodalGeneratorAdvanced,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
@@ -364,4 +487,5 @@ NODE_DISPLAY_NAME_MAPPINGS = {
     "LLavaSamplerAdvanced|LP": "LLava Sampler Advanced [LP]",
     "LLavaSimple|LP": "LLava Simple [LP]",
     "LLavaAdvanced|LP": "LLava Advanced [LP]",
+    "MultimodalGeneratorAdvanced|LP": "Multimodal Generator Advanced [LP]",
 }

@@ -9,5 +9,9 @@
     "LLava Sampler Advanced [LP]":"Generates text using the VLM. Advanced settings.",
     "LLava Simple [LP]":"Generates text using the loaded VLM from LLava Loader. Simple settings.",
     "LLava Advanced [LP]":"Generates text using the loaded VLM from LLava Loader. Advanced settings.",
-    "Recognize Anything (RAM) [LP]":"Recognize Anything (RAM) - node for generating tags for an image using the Recognize Anything Plus Model"
+    "Recognize Anything (RAM) [LP]":"Recognize Anything (RAM) - node for generating tags for an image using the Recognize Anything Plus Model",
+    "Image Remove Background (rembg) [LP]":"Removes background for images with user-defined model. This node uses the rembg library. It is NOT recommended for use in normal scenarios.",
+    "Image Remove Background (BiRefNet) [LP]":"Removes background for images with user-defined model type of BiRefNet. Recommended for fast and high-quality background removal",
+    "Image Remove Background (RMBG) [LP]":"Removes background for images with user-defined model. This node uses the RMBG models. Recommended for ultra-high precision",
+    "Multimodal Generator Advanced [LP]":"Node for Multimodal neural models based on GGUF. Supports Qwen2.5-VL of GGUF format. Based on llama-mtmd."
 }

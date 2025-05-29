@@ -35,6 +35,9 @@ check_requirements_installed(llama_cpp_agent_path)
 init()
 
 node_list = [
+    "image.birefnet_LP",
+    "image.rmbg_LP",
+    "image.rembg_LP",
     "llm.llm_LP",
     "vlm.autotagger_LP",
     "vlm.llava_LP",

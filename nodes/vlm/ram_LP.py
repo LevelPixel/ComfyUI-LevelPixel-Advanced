@@ -2,6 +2,9 @@ from PIL import Image
 import torch
 import gc
 import numpy as np
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning, module="timm\\.models")
+
 from ram.models import ram
 from ram.models import ram_plus
 from ram.models import tag2text

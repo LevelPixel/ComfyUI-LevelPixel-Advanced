@@ -154,6 +154,7 @@ def install_llama(system_info):
 
     # Build from source with appropriate acceleration
     try:
+        print("WARNING: Building the llama-cpp-python wheels can take UP TO AN HOUR due to the specific build conditions. This is not an error, just wait.")
         if system_info.get('metal', False):
             print("Building llama-cpp-python from source with Metal support")
             os.environ['CMAKE_ARGS'] = "-DGGML_METAL=on"
@@ -327,17 +328,6 @@ def get_comfy_dir(subpath=None, mkdir=False):
 def should_install_js():
     return not hasattr(PromptServer.instance, "supports") or "custom_nodes_from_web" not in PromptServer.instance.supports
 
-def has_nvidia_cuda():
-    try:
-        output = subprocess.check_output(
-            ['nvidia-smi', '--query-gpu=name', '--format=csv,noheader'],
-            stderr=subprocess.DEVNULL,
-            encoding='utf-8'
-        ).strip()
-        return bool(output)
-    except (subprocess.CalledProcessError, FileNotFoundError):
-        return False
-
 def is_installed(pkg_name: str, min_version: str = '') -> bool:
     try:
         ver = metadata.version(pkg_name)
@@ -354,7 +344,8 @@ def uninstall(pkg: str):
     subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', '-y', pkg])
 
 def install_onnxruntime():
-    gpu = has_nvidia_cuda()
+    import torch
+    gpu = torch.cuda.is_available()
     print(f"Found NVIDIA GPU: {gpu}")
     if gpu:
         if is_installed('onnxruntime'):

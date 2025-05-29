@@ -2,8 +2,14 @@ torch>=2.0.1
 torchvision>=0.15.2
 pillow>=9.4.0
 numpy>=1.26.4
-matplotlib
+huggingface-hub>=0.19.0
+transformers>=4.35.0
+safetensors>=0.3.0
 scikit-build-core>=0.10.7
+transparent-background>=1.2.4
 timm>=0.4.12
+tqdm>=4.65.0
 fairscale>=0.4.4
+rembg>=2.0.66
+matplotlib
 ram @ git+https://github.com/xinyu1205/recognize-anything.git
