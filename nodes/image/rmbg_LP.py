@@ -15,7 +15,7 @@ import types
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-folder_paths.add_model_folder_path("rmbg", os.path.join(folder_paths.models_dir, "RMBG"))
+folder_paths.add_model_folder_path("rembg", os.path.join(folder_paths.models_dir, "rembg"))
 
 AVAILABLE_MODELS = {
     "RMBG-2.0": {
@@ -71,7 +71,7 @@ class BaseModelLoader:
     def __init__(self):
         self.model = None
         self.current_model_version = None
-        self.base_cache_dir = os.path.join(folder_paths.models_dir, "RMBG")
+        self.base_cache_dir = os.path.join(folder_paths.models_dir, "rembg")
     
     def get_cache_dir(self, model_name):
         cache_path = os.path.join(self.base_cache_dir, AVAILABLE_MODELS[model_name]["cache_dir"])
