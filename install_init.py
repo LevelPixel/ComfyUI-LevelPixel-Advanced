@@ -342,14 +342,14 @@ def install(pkg_spec: str):
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', pkg_spec])
     except subprocess.CalledProcessError as e:
         print(f"Failed to install {pkg_spec}: {e}")
-        raise
+        return
 
 def uninstall(pkg: str):
     try:
         subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', '-y', pkg])
     except subprocess.CalledProcessError as e:
         print(f"Failed to uninstall {pkg}: {e}")
-        raise
+        return
 
 def install_onnxruntime():
     import torch
