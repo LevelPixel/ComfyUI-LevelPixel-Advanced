@@ -338,10 +338,18 @@ def is_installed(pkg_name: str, min_version: str = '') -> bool:
         return False
 
 def install(pkg_spec: str):
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', pkg_spec])
+    try:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', pkg_spec])
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to install {pkg_spec}: {e}")
+        raise
 
 def uninstall(pkg: str):
-    subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', '-y', pkg])
+    try:
+        subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', '-y', pkg])
+    except subprocess.CalledProcessError as e:
+        print(f"Failed to uninstall {pkg}: {e}")
+        raise
 
 def install_onnxruntime():
     import torch
@@ -349,7 +357,7 @@ def install_onnxruntime():
     print(f"Found NVIDIA GPU: {gpu}")
     if gpu:
         if is_installed('onnxruntime'):
-            #uninstall("onnxruntime")
+            uninstall("onnxruntime")
             print(f"LP >>> Your python has the 'onnxruntime' library installed, although your computer supports 'onnxruntime-gpu'.")
             print(f"LP >>> Solution: If other node packages do not use the 'onnxruntime' library, then remove the 'onnxruntime' library for your python.")
             print(f"LP >>> Close ComfyUI and run the script at .\\ComfyUI\\custom_nodes\\ComfyUI-LevelPixel-Advanced\\scripts\\remove_onnxruntime.bat")
@@ -357,7 +365,7 @@ def install_onnxruntime():
             install("onnxruntime-gpu>=1.22")
     else:
         if is_installed('onnxruntime-gpu'):
-            #uninstall("onnxruntime-gpu")
+            uninstall("onnxruntime-gpu")
             print(f"LP >>> Your python has the 'onnxruntime-gpu' library installed, but you don't have a GPU.")
             print(f"LP >>> Solution: If other node packages do not use the 'onnxruntime-gpu' library, then remove the 'onnxruntime-gpu' library for your python.")
             print(f"LP >>> Close ComfyUI and run the script at .\\ComfyUI\\custom_nodes\\ComfyUI-LevelPixel-Advanced\\scripts\\remove_onnxruntime.bat")
