@@ -12,4 +12,7 @@ tqdm>=4.65.0
 fairscale>=0.4.4
 rembg>=2.0.66
 matplotlib
+diskcache>=5.6.1
+jinja2>=2.11.3
+typing-extensions>=4.5.0
 ram @ git+https://github.com/xinyu1205/recognize-anything.git

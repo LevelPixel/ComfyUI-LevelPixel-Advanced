@@ -106,6 +106,7 @@ def install_package(package_name, extra_args=None):
     command = [sys.executable, "-m", "pip", "install", package_name, "--no-cache-dir"]
     if extra_args:
         command.extend(extra_args.split())
+    print("WARNING: Building the llama-cpp-python wheels can take UP TO AN HOUR due to the specific build conditions. This is not an error, just wait.")
     subprocess.check_call(command)
 
 def package_is_installed(package_name):
@@ -154,7 +155,6 @@ def install_llama(system_info):
 
     # Build from source with appropriate acceleration
     try:
-        print("WARNING: Building the llama-cpp-python wheels can take UP TO AN HOUR due to the specific build conditions. This is not an error, just wait.")
         if system_info.get('metal', False):
             print("Building llama-cpp-python from source with Metal support")
             os.environ['CMAKE_ARGS'] = "-DGGML_METAL=on"
