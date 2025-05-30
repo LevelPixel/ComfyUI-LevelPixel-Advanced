@@ -189,6 +189,12 @@ Furthermore you need to download the [RAM](https://huggingface.co/xinyu1205/reco
 
 You can also configure the location in 'extra\_model\_paths.yaml' in the Confyui folder.
 
+# Update History
+
+30-05-2025 - Added new node Multimodal Generation Advanced for neural models of multimodal type (for example, for Qwen2.5-VL)
+
+The license for this package has been changed from Apache 2.0 to GNU GPLv3
+
 # Credits
 
 ComfyUI/[ComfyUI](https://github.com/comfyanonymous/ComfyUI) - A powerful and modular stable diffusion GUI.
@@ -199,16 +205,12 @@ WD autotagger node for ComfyUI/[ComfyUI-WD14-Tagger](https://github.com/pythongo
 
 RAM node for ComfyUI/[ComfyUI-Hangover-Recognize_Anything](https://github.com/Hangover3832/ComfyUI-Hangover-Recognize_Anything) - Source ComfyUI nodes for RAM (source repository is archived, but we will continue to support RAM nodes)
 
-RAM node for ComfyUI/[ComfyUI-Hangover-Recognize_Anything](https://github.com/Hangover3832/ComfyUI-Hangover-Recognize_Anything) - Source ComfyUI nodes for RAM (source repository is archived, but we will continue to support RAM nodes)
-
-RemBG nodes for ComfyUI/[rembg-comfyui-node](https://github.com/Loewen-Hob/rembg-comfyui-node-better) - RemBG nodes for ComfyUI.
-
 RemBG software package/[rembg](https://github.com/danielgatis/rembg) - Software to remove background for any object in the picture.
 
-RMBG nodes for ComfyUI/[ComfyUI-RMBG](https://github.com/1038lab/ComfyUI-RMBG) - Thanks for the awesome code and implementation of using BiRefNet and RMBG-2.0 models in very convenient and customizable nodes. Note - when using Image Remove Background (RMBG) and Image Remove Background (BiRefNet) you agree to the GPL-3.0 License as stated by the original author of the functionality. The rest of the ComfyUI-LevelPixel-Advanced package uses the Apache-2 License, as the rest of the package does not use Image Remove Background (RMBG) and Image Remove Background (BiRefNet) directly.
+RMBG nodes for ComfyUI/[ComfyUI-RMBG](https://github.com/1038lab/ComfyUI-RMBG) - Thanks for the awesome code and implementation of using BiRefNet and RMBG-2.0 models in very convenient and customizable nodes.
 
 # License
 
 Copyright (c) 2024-present [Level Pixel](https://github.com/LevelPixel)
 
-Licensed under Apache-2.0 License
+Licensed under GNU GPLv3

@@ -1,3 +1,21 @@
+# ComfyUI-LevelPixel-Advanced and ComfyUI-RMBG
+# This custom node for ComfyUI provides functionality for background removal using various models,
+# including RMBG-2.0, INSPYRENET, BEN, BEN2 and BIREFNET-HR. It leverages deep learning techniques
+# to process images and generate masks for background removal.
+#
+# Models License Notice:
+# - RMBG-2.0: Apache-2.0 License (https://huggingface.co/briaai/RMBG-2.0)
+# - INSPYRENET: MIT License (https://github.com/plemeri/InSPyReNet)
+# - BEN: Apache-2.0 License (https://huggingface.co/PramaLLC/BEN)
+# - BEN2: Apache-2.0 License (https://huggingface.co/PramaLLC/BEN2)
+#
+# This integration script follows GPL-3.0 License.
+# When using or modifying this code, please respect both the original model licenses
+# and this integration's license terms.
+#
+# Source: https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced and https://github.com/1038lab/ComfyUI-RMBG
+
+
 import os
 import torch
 from PIL import Image

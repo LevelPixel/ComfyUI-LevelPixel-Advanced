@@ -1,3 +1,16 @@
+# ComfyUI-LevelPixel-Advanced and ComfyUI-RMBG
+# This custom node for ComfyUI provides functionality for background removal using BiRefNet models.
+#
+# Model License Notice:
+# - BiRefNet Models: Apache-2.0 License (https://huggingface.co/ZhengPeng7)
+#
+# This integration script follows GPL-3.0 License.
+# When using or modifying this code, please respect both the original model licenses
+# and this integration's license terms.
+#
+# Source: https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced and https://github.com/AILab-AI/ComfyUI-RMBG
+
+
 import os
 import torch
 from PIL import Image, ImageFilter
