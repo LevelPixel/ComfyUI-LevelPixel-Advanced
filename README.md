@@ -41,8 +41,9 @@ Before running ComfyUI with this node package, you should make sure that you hav
   Download: [https://cmake.org/download](https://cmake.org/download)
 
 4) `llama-mtmd-cli` - if you want to use Qwen2.5-VL gguf in Multimodal Generator Advanced node, you need to download the Llama.cpp (llama-mtmd-cli) libraries from this link:\
-  Download: [https://github.com/ggml-org/llama.cpp/releases](https://github.com/ggml-org/llama.cpp/releases)\
+  Download: [https://github.com/ggml-org/llama.cpp/releases](https://github.com/ggml-org/llama.cpp/releases/tag/b5317)\
   Choose the archive that suits your system. Probably, for you it will be `llama-b5317-bin-win--cu12.4-x64.zip`\
+  IMPORTANT - download only `b5317` realese. There are still some output errors on new versions
   After downloading, go to the path:\
   `ComfyUI\custom_nodes\ComfyUI-LevelPixel-Advanced\nodes\vlm\llama-mtmd-cli`\
   And unzip the downloaded archive here.\
