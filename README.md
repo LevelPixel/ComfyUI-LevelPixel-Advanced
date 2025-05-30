@@ -4,18 +4,26 @@
 
 The purpose of this package is to collect the most necessary and atomic nodes for working with LLM and VLM models with GGUF format. Installation and maintenance of LLM and VLM nodes based on LLaVA is more complex, so this node package should now be installed separately from the main Level Pixel node package.
 
+*[Our dream is to see object-oriented programming in ComfyUI. We will try to get closer to it.](https://www.patreon.com/LevelPixel)*
+
 **In this Level Pixel Advanced node pack you will find:**
 LLM nodes, LLaVa and other VLM nodes, Autotagger, RAM autotagger, WD Autotagger
 
-Recommend that you install the main node package from Level Pixel:
-
+Recommend that you install the main node package from Level Pixel:\
 [https://github.com/LevelPixel/ComfyUI-LevelPixel](https://github.com/LevelPixel/ComfyUI-LevelPixel)
 
-The official repository of the current node package is located at this link:
-
+The official repository of the current node package is located at this link:\
 [https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced](https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced)
 
-## Contacts:
+**Like our nodes? Then we'd be happy to see your star on our GitHub repository!**
+
+## Contacts, services and support:
+
+Our official Patreon page:\
+[https://www.patreon.com/LevelPixel](https://www.patreon.com/LevelPixel)
+
+On Patreon you can get services from us on issues related to ComfyUI, Forge, programming and AI tools. 
+You can also support our project and support the development of our node packages.
 
 For cooperation, suggestions and ideas you can write to email:
 levelpixel.dev@gmail.com
