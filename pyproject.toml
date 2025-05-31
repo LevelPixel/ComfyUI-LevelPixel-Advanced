@@ -28,4 +28,4 @@ Repository = "https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced"
 [tool.comfy]
 PublisherId = "levelpixel"
 DisplayName = "ComfyUI Level Pixel Advanced"
-Icon = ""
+Icon = "https://avatars.githubusercontent.com/u/175361036"
