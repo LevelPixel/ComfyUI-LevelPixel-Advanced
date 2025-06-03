@@ -1,4 +1,4 @@
-## Level Pixel nodes for ComfyUI - Advanced nodes
+# Level Pixel nodes for ComfyUI - Advanced nodes
 
 ![banner_LevelPixel_with_logo](https://github.com/user-attachments/assets/ef79f2c9-04fb-485f-aba5-6cd00cb14d8c)
 
@@ -17,7 +17,7 @@ The official repository of the current node package is located at this link:\
 
 **Like our nodes? Then we'd be happy to see your star on our GitHub repository!**
 
-## Contacts, services and support:
+## Contacts, services and support
 
 Our official Patreon page:\
 [https://www.patreon.com/LevelPixel](https://www.patreon.com/LevelPixel)
@@ -26,30 +26,22 @@ On Patreon you can get services from us on issues related to ComfyUI, Forge, pro
 You can also support our project and support the development of our node packages.
 
 For cooperation, suggestions and ideas you can write to email:
-levelpixel.dev@gmail.com
+<levelpixel.dev@gmail.com>
 
-# Installation:
+## Installation
 
-### Pre-Installation:
+### Pre-Installation
 
 Before running ComfyUI with this node package, you should make sure that you have the following programs and libraries installed so that ComfyUI can compile the necessary libraries and programs for llama-cpp-python (the main library that allows you to use any current GGUF models and neural network architectures):
 
-1) `CUDA drivers` - install the latest version.
-  Download: [https://developer.nvidia.com/cuda-downloads](https://developer.nvidia.com/cuda-downloads)
-2) `Visual Studio 2022 Community IDE` with libraries for compiling C++ programs, specifically with individual components (select them in Visual Studio Installer when installing/modifying Visual Studio 2022):
-
-* MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
-* MSVC v143 - VS 2022 C++ x64/x86 build tools (v14.38-17.8)
-* C++ Cmake tools for Windows
-* C++ Cmake tools for Linux and Mac  
-
-  Download: [https://visualstudio.microsoft.com/downloads](https://visualstudio.microsoft.com/downloads)
-
-3) `CMAKE official distribution` - download and install the latest version.
-  Download: [https://cmake.org/download](https://cmake.org/download)
-
-4) `llama-mtmd-cli` - if you want to use Qwen2.5-VL gguf in Multimodal Generator Advanced node, you need to download the Llama.cpp (llama-mtmd-cli) libraries from this link:\
-  Download: [https://github.com/ggml-org/llama.cpp/releases/tag/b5317](https://github.com/ggml-org/llama.cpp/releases/tag/b5317)\
+1. Download [CUDA drivers](https://developer.nvidia.com/cuda-downloads) - install the latest version.
+2. Download [Visual Studio 2022 Community IDE](https://visualstudio.microsoft.com/downloads) with libraries for compiling C++ programs, specifically with individual components (select them in Visual Studio Installer when installing/modifying Visual Studio 2022):
+    - MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
+    - MSVC v143 - VS 2022 C++ x64/x86 build tools (v14.38-17.8)
+    - C++ Cmake tools for Windows
+    - C++ Cmake tools for Linux and Mac
+3. Download [CMAKE official distribution](https://cmake.org/download) - install the latest version.
+4. Download [llama-mtmd-cli](https://github.com/ggml-org/llama.cpp/releases/tag/b5317) - if you want to use Qwen2.5-VL gguf in Multimodal Generator Advanced node.\
   Choose the archive that suits your system. Probably, for you it will be `llama-b5317-bin-win--cu12.4-x64.zip`\
   IMPORTANT - download only `b5317` realese. There are still some output errors on new versions\
   After downloading, go to the path:\
@@ -63,7 +55,7 @@ Before running ComfyUI with this node package, you should make sure that you hav
 Install [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager) and do steps introduced there to install this repo 'ComfyUI-LevelPixel-Advanced'.
 The nodes of the current package will be updated automatically when you click "Update ALL" in ComfyUI Manager.
 
-### Alternative installation package:
+### Alternative installation package
 
 Clone the repository:
 `git clone https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced.git`
@@ -79,17 +71,18 @@ It will attempt to use symlinks and junctions to prevent having to copy files an
   - Navigate to the cloned repo e.g. `custom_nodes/ComfyUI-LevelPixel-Advanced`
   - `git pull`
 
-### Troubleshooting:
+### Troubleshooting
 
 If you have problems running ComfyUI with this node package, check and do the following:
 
-* The path to Cmake (official distribution, for example, path `C:\Program Files\CMake\bin`) must be at the very top of the Path list in the **System environment variables**. Make sure that the path is at the top of the Path in the **System variables**, and not only in the user variables. If Cmake is not at the top of the list, then some libraries may not compile due to the lack of the current version of the Cmake compiler.
-* The path to the current version of your CUDA must be at the very top of the **Path** list in the **System environment variables** (right after Cmake). Make sure that the path is at the top of the Path in the System variables, and not only in the user variables.
+- The path to Cmake (official distribution, for example, path `C:\Program Files\CMake\bin`) must be at the very top of the Path list in the **System environment variables**. Make sure that the path is at the top of the Path in the **System variables**, and not only in the user variables. If Cmake is not at the top of the list, then some libraries may not compile due to the lack of the current version of the Cmake compiler.
+- The path to the current version of your CUDA must be at the very top of the **Path** list in the **System environment variables** (right after Cmake). Make sure that the path is at the top of the Path in the System variables, and not only in the user variables.
   Here are the paths that should be in Path for CUDA (this is an example, substitute your CUDA version for "12.9"):
 
   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`
   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\bin`
-* In System environment variables, add the `CMAKE_ARGS` variable and set it to the following:
+
+- In System environment variables, add the `CMAKE_ARGS` variable and set it to the following:
   `-DGGML_CUDA=on -DCMAKE_GENERATOR_TOOLSET='cuda=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9'`
 
 Save the changes made to System environment variables.
@@ -104,15 +97,15 @@ After that, run ComfyUI again.
 
 If you still get errors, restart your PC, this may help (sometimes during installation the cache gets damaged and remains in the computer's RAM).
 
-If these tips don't help - study the logs and the cause of the error, read docs about building llama.cpp ([https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md)), and then talk to some powerful neural network about this error - it will probably help you solve your problem.
+If these tips don't help - study the logs and the cause of the error, read docs about building llama.cpp [https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md), and then talk to some powerful neural network about this error - it will probably help you solve your problem.
 
-# Features
+## Features
 
 All nodes Level Pixel:
 
-<img width="1171" alt="level-pixel-nodes_2" src="https://github.com/user-attachments/assets/792e43d8-fd96-4a27-bf4b-db84261b6014">
+![level-pixel-advanced-nodes_2](https://github.com/user-attachments/assets/792e43d8-fd96-4a27-bf4b-db84261b6014)
 
-## Multimodal Generator node
+### Multimodal Generator node
 
 Multimodal Generator Advanced - New node on new technology of multimodal neural models based on GGUF. Supports Qwen2.5-VL of GGUF format.
 Experimental node! It is not recommended to use it in fully autonomous workflows yet.
@@ -134,7 +127,7 @@ How to use Multimodal Generator node:
 
 3. **Run ComfyUI and add to workflow node Multimodal Generator Advanced [LP]. Choose ckpt model and clip, pin image and write prompt.**
 
-## LLaVa nodes
+### LLaVa nodes
 
 A node that generates text using the LLM model and CLIP by image and prompt with subsequent unloading of the model from memory.
 
@@ -146,7 +139,7 @@ Mainly supports only Mistral (with clip for images) and Llama (with clip for ima
 
 At the moment the nodes are obsolete (but still in support status), instead of them it is supposed to develop "Multimodal Generator nodes" based on llama-mtmd for using Qwen2.5-VL, Bagel and other multimodal neural networks.
 
-## LLM nodes
+### LLM nodes
 
 A node that generates text using the LLM model with subsequent unloading of the model from memory. Useful in those workflows where there is constant switching between different models and technologies under conditions of insufficient RAM of the video processor.
 
@@ -154,7 +147,7 @@ Our LLM nodes support the latest LLM and CLIP models, and should support future 
 
 The core functionality is taken from [ComfyUI_VLM_nodes](https://github.com/gokayfem/ComfyUI_VLM_nodes) and belongs to its authors.
 
-## Autotagger nodes based on WD tagger models
+### Autotagger nodes based on WD tagger models
 
 An image autotagger that creates highly relevant tags using fast and ultra-accurate, highly specialized models. More diverse models are planned to be added to the list of models in the future.
 
@@ -162,14 +155,15 @@ This node allows it to be used in cycles and conditions (in places where it is n
 
 The core functionality is taken from [ComfyUI-WD14-Tagger](https://github.com/pythongosssss/ComfyUI-WD14-Tagger) and belongs to its authors.
 
-## Image Remove Background
+### Image Remove Background
 
 A more improved version of nodes for removing background for ComfyUI with an extended list of models.
 
 There are three separate nodes that implement different functionality for different neural models:
-* `Image Remove Background (RMBG)` - RECOMMENDED! The most powerful node to use, which uses the most powerful model RMBG-2.0 for background removal. 
-* `Image Remove Background (BiRefNet)` - Recommended for super-fast background removal with high quality. Uses the latest generation BiRefNet models that perfectly remove any background in a fraction of a second on the GPU.
-* `Image Remove Background (rembg)` - Not recommended for normal use and requires additional settings (read below). It differs in that it allows you to include other special types of neural networks to remove the background in certain situations, but the models will not always be the latest generation for this node.
+
+- `Image Remove Background (RMBG)` - RECOMMENDED! The most powerful node to use, which uses the most powerful model RMBG-2.0 for background removal. 
+- `Image Remove Background (BiRefNet)` - Recommended for super-fast background removal with high quality. Uses the latest generation BiRefNet models that perfectly remove any background in a fraction of a second on the GPU.
+- `Image Remove Background (rembg)` - Not recommended for normal use and requires additional settings (read below). It differs in that it allows you to include other special types of neural networks to remove the background in certain situations, but the models will not always be the latest generation for this node.
 
 To use on GPU, at least CUDA 12.4 (Pytorch cu124) is required, so I recommend upgrading to newer versions of ComfyUI and Pytorch.
 
@@ -182,29 +176,29 @@ Close ComfyUI and run the script at `.\ComfyUI\custom_nodes\ComfyUI-LevelPixel-A
 
 The core functionality is taken from [RemBG nodes for ComfyUI](https://github.com/Loewen-Hob/rembg-comfyui-node-better) and from [ComfyUI-RMBG](https://github.com/1038lab/ComfyUI-RMBG) and belongs to its authors.
 
-## Recognize Anything Model (RAM++)
+### Recognize Anything Model (RAM++)
 
 The counterpart to Segment Anything Model (SAM)
 
 This is an image recognition node for [ComfyUI](https://github.com/comfyanonymous/ComfyUI) based on the RAM++ model from [xinyu1205](https://huggingface.co/xinyu1205).
 
-* [https://huggingface.co/xinyu1205/recognize-anything-plus-model](https://huggingface.co/xinyu1205/recognize-anything-plus-model)
-* [https://github.com/xinyu1205/recognize-anything](https://github.com/xinyu1205/recognize-anything)
-* This node outputs a string of tags with all the recognized objects and elements in the image
-* 3 different models.
-* RAM and RAM++ outputs tags in English and Chinese language
+- [https://huggingface.co/xinyu1205/recognize-anything-plus-model](https://huggingface.co/xinyu1205/recognize-anything-plus-model)
+- [https://github.com/xinyu1205/recognize-anything](https://github.com/xinyu1205/recognize-anything)
+- This node outputs a string of tags with all the recognized objects and elements in the image
+- 3 different models.
+- RAM and RAM++ outputs tags in English and Chinese language
 
 Furthermore you need to download the [RAM](https://huggingface.co/xinyu1205/recognize_anything_model/resolve/main/ram_swin_large_14m.pth), [RAM++](https://huggingface.co/xinyu1205/recognize-anything-plus-model/resolve/main/ram_plus_swin_large_14m.pth) and [tag2text](https://huggingface.co/xinyu1205/recognize_anything_model/resolve/main/tag2text_swin_14m.pth) models and place it in the /ComfyUI/models/rams/ folder or use the [ComfyUI-Manager](https://github.com/Comfy-Org/ComfyUI-Manager) model downloader.
 
 You can also configure the location in 'extra\_model\_paths.yaml' in the Confyui folder.
 
-# Update History
+## Update History
 
 30-05-2025 - Added new node Multimodal Generation Advanced for neural models of multimodal type (for example, for Qwen2.5-VL)
 
 The license for this package has been changed from Apache 2.0 to GNU GPLv3
 
-# Credits
+## Credits
 
 ComfyUI/[ComfyUI](https://github.com/comfyanonymous/ComfyUI) - A powerful and modular stable diffusion GUI.
 
@@ -218,7 +212,7 @@ RemBG software package/[rembg](https://github.com/danielgatis/rembg) - Software 
 
 RMBG nodes for ComfyUI/[ComfyUI-RMBG](https://github.com/1038lab/ComfyUI-RMBG) - Thanks for the awesome code and implementation of using BiRefNet and RMBG-2.0 models in very convenient and customizable nodes.
 
-# License
+## License
 
 Copyright (c) 2024-present [Level Pixel](https://github.com/LevelPixel)
 
