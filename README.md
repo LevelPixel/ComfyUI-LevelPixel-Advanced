@@ -97,6 +97,13 @@ After that, run ComfyUI again.
 
 If you still get errors, restart your PC, this may help (sometimes during installation the cache gets damaged and remains in the computer's RAM).
 
+Regarding onnxruntime - usually, various node packages install the onnxruntime library instead of the onnxruntime-gpu package if your computer has a GPU. Some other packages may install onnxruntime-gpu by default. However, due to the strange implementation of the library by its authors, we have a contradiction between onnxruntime-gpu and onnxruntime, which leads to errors when running ComfyUI.
+
+To fix the error with onnxruntime that you may have, you can use the script at the path (only for Windows!):
+`.\ComfyUI\custom_nodes\ComfyUI-LevelPixel-Advanced\scripts\remove_onnxruntime.bat`
+
+After which you need to run ComfyUI again, our node package should automatically install the correct version of onnxruntime for your system.
+
 If these tips don't help - study the logs and the cause of the error, read docs about building llama.cpp [https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md), and then talk to some powerful neural network about this error - it will probably help you solve your problem.
 
 ## Features
