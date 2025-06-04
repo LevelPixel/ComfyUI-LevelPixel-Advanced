@@ -344,32 +344,23 @@ def install(pkg_spec: str):
         print(f"Failed to install {pkg_spec}: {e}")
         return
 
-def uninstall(pkg: str):
-    try:
-        subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', '-y', pkg])
-    except subprocess.CalledProcessError as e:
-        print(f"Failed to uninstall {pkg}: {e}")
-        return
-
 def install_onnxruntime():
     import torch
     gpu = torch.cuda.is_available()
     print(f"Found NVIDIA GPU: {gpu}")
     if gpu:
         if is_installed('onnxruntime'):
-            uninstall("onnxruntime")
             print(f"LP >>> Your python has the 'onnxruntime' library installed, although your computer supports 'onnxruntime-gpu'.")
             print(f"LP >>> Solution: If other node packages do not use the 'onnxruntime' library, then remove the 'onnxruntime' library for your python.")
             print(f"LP >>> Close ComfyUI and run the script at .\\ComfyUI\\custom_nodes\\ComfyUI-LevelPixel-Advanced\\scripts\\remove_onnxruntime.bat")
-        if not is_installed('onnxruntime-gpu'):
+        elif not is_installed('onnxruntime-gpu'):
             install("onnxruntime-gpu>=1.22")
     else:
         if is_installed('onnxruntime-gpu'):
-            uninstall("onnxruntime-gpu")
             print(f"LP >>> Your python has the 'onnxruntime-gpu' library installed, but you don't have a GPU.")
             print(f"LP >>> Solution: If other node packages do not use the 'onnxruntime-gpu' library, then remove the 'onnxruntime-gpu' library for your python.")
             print(f"LP >>> Close ComfyUI and run the script at .\\ComfyUI\\custom_nodes\\ComfyUI-LevelPixel-Advanced\\scripts\\remove_onnxruntime.bat")
-        if not is_installed('onnxruntime'):
+        elif not is_installed('onnxruntime'):
             install("onnxruntime>=1.22")
 
 def init(check_imports=None):
