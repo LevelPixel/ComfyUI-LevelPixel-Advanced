@@ -35,6 +35,15 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 folder_paths.add_model_folder_path("rembg", os.path.join(folder_paths.models_dir, "rembg"))
 
+COLOR_PRESETS = {
+    "black": "#000000", "white": "#FFFFFF", "red": "#FF0000", "green": "#00FF00", "blue": "#0000FF",
+    "yellow": "#FFFF00", "cyan": "#00FFFF", "magenta": "#FF00FF", "gray": "#808080", "silver": "#C0C0C0",
+    "maroon": "#800000", "olive": "#808000", "purple": "#800080", "teal": "#008080", "navy": "#000080",
+    "orange": "#FFA500", "pink": "#FFC0CB", "brown": "#A52A2A", "violet": "#EE82EE", "indigo": "#4B0082",
+    "light_gray": "#D3D3D3", "dark_gray": "#A9A9A9", "light_blue": "#ADD8E6", "dark_blue": "#00008B",
+    "light_blue": "#ADD8E6", "dark_blue": "#00008B", "light_green": "#90EE90", "dark_green": "#006400"
+}
+
 AVAILABLE_MODELS = {
     "RMBG-2.0": {
         "type": "rmbg",
@@ -655,10 +664,59 @@ class ImageRemoveBackgroundRMBG:
             empty_mask_image = empty_mask.reshape((-1, 1, empty_mask.shape[-2], empty_mask.shape[-1])).movedim(1, -1).expand(-1, -1, -1, 3)
             return (image, empty_mask, empty_mask_image)
 
+def fix_color_format(color: str) -> str:
+    """Fix color format to valid hex code"""
+    if not color:
+        return ""
+    
+    color = color.strip().upper()
+    if not color.startswith('#'):
+        color = f"#{color}"
+        
+    color = color[1:]
+    if len(color) == 3:
+        r, g, b = color[0], color[1], color[2]
+        return f"#{r}{r}{g}{g}{b}{b}"
+    elif len(color) < 6:
+        raise ValueError(f"Invalid color format: {color}")
+    elif len(color) > 6:
+        color = color[:6]
+        
+    return f"#{color}"
+
+class ColorInput:
+    @classmethod
+    def INPUT_TYPES(self):
+        return {
+            "required": {
+                "preset": (list(COLOR_PRESETS.keys()),),
+                "color": ("STRING", {"default": "", "placeholder": "Enter color code (e.g. #FF0000 or #F00)"}),
+            },
+        }
+
+    RETURN_TYPES = ("COLOR",)
+    RETURN_NAMES = ("COLOR",)
+    FUNCTION = 'get_color'
+    CATEGORY = 'LevelPixel/Image'
+
+    def get_color(self, preset, color):
+        if not color:
+            return (COLOR_PRESETS[preset],)
+            
+        try:
+            fixed_color = fix_color_format(color)
+            if not all(c in '0123456789ABCDEFabcdef' for c in fixed_color[1:]):
+                raise ValueError(f"Invalid hex characters in {color}")
+            return (fixed_color,)
+        except Exception as e:
+            raise RuntimeError(f"Invalid color format: {color}. Please use format like #FF0000 or #F00")
+
 NODE_CLASS_MAPPINGS = {
-    "ImageRemoveBackgroundRMBG|LP": ImageRemoveBackgroundRMBG
+    "ImageRemoveBackgroundRMBG|LP": ImageRemoveBackgroundRMBG,
+    "ColorInput|LP": ColorInput,
 }
 
 NODE_DISPLAY_NAME_MAPPINGS = {
     "ImageRemoveBackgroundRMBG|LP": "Image Remove Background (RMBG) [LP]",
+    "ColorInput|LP": "Color Input [LP]",
 }
