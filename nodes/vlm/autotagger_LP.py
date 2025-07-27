@@ -1,10 +1,8 @@
-import comfy.utils
-import asyncio
-import aiohttp
 import numpy as np
 import csv
 import os
 import sys
+import requests
 
 from PIL import Image
 from server import PromptServer
@@ -170,50 +168,17 @@ def init(check_imports):
     install_js()
     return True
 
-async def download_to_file(url, destination, update_callback, is_ext_subpath=True, session=None):
-    close_session = False
-    if session is None:
-        close_session = True
-        loop = None
-        try:
-            loop = asyncio.get_event_loop()
-        except:
-            loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(loop)
-
-        session = aiohttp.ClientSession(loop=loop)
+def download_to_file(url, destination, is_ext_subpath=True):
     if is_ext_subpath:
         destination = get_ext_dir(destination)
-    try:
-        proxy = os.getenv("HTTP_PROXY") or os.getenv("http_proxy")
-        print("proxy:", proxy)
-        proxy_auth = None
-        if proxy:
-            proxy_auth = aiohttp.BasicAuth(os.getenv("PROXY_USER", ""), os.getenv("PROXY_PASS", ""))
-
-        async with session.get(url, proxy=proxy, proxy_auth=proxy_auth) as response:            
-            size = int(response.headers.get('content-length', 0)) or None
-
-            with tqdm(
-                unit='B', unit_scale=True, miniters=1, desc=url.split('/')[-1], total=size,
-            ) as progressbar:
-                with open(destination, mode='wb') as f:
-                    perc = 0
-                    async for chunk in response.content.iter_chunked(2048):
-                        f.write(chunk)
-                        progressbar.update(len(chunk))
-                        if update_callback is not None and progressbar.total is not None and progressbar.total != 0:
-                            last = perc
-                            perc = round(progressbar.n / progressbar.total, 2)
-                            if perc != last:
-                                last = perc
-                                await update_callback(perc)
-    finally:
-        if close_session and session is not None:
-            await session.close()
-
-def wait_for_async(async_fn, loop=None):
-    return asyncio.run(async_fn())
+    proxy = os.getenv("HTTP_PROXY") or os.getenv("http_proxy")
+    proxies = {"http": proxy, "https": proxy} if proxy else None
+    response = requests.get(url, stream=True, proxies=proxies)
+    response.raise_for_status()
+    with open(destination, "wb") as f:
+        for chunk in response.iter_content(chunk_size=2048):
+            if chunk:
+                f.write(chunk)
 
 def update_node_status(client_id, node, text, progress=None):
     if client_id is None:
@@ -266,12 +231,14 @@ def get_installed_models():
     models = [m for m in models if os.path.exists(os.path.join(models_dir, os.path.splitext(m)[0] + ".csv"))]
     return models
 
-async def tag(image, model_name, threshold=0.35, character_threshold=0.85, exclude_tags="", replace_underscore=True, trailing_comma=False, client_id=None, node=None):
+def tag(image, model_name, threshold=0.35, character_threshold=0.85, exclude_tags="", replace_underscore=True, trailing_comma=False, client_id=None, node=None):
     if model_name.endswith(".onnx"):
         model_name = model_name[0:-5]
     installed = list(get_installed_models())
     if not any(model_name + ".onnx" in s for s in installed):
-        await download_model(model_name, client_id, node)
+        print(f"Started downloading model file {model_name}")
+        download_model(model_name, client_id, node)
+        print(f"Finished downloading model file {model_name}")
 
     name = os.path.join(models_dir, model_name + ".onnx")
     from onnxruntime import InferenceSession
@@ -326,7 +293,7 @@ async def tag(image, model_name, threshold=0.35, character_threshold=0.85, exclu
     print(res)
     return res
 
-async def download_model(model, client_id, node):
+def download_model(model, client_id, node):
     hf_endpoint = os.getenv("HF_ENDPOINT", defaults["HF_ENDPOINT"])
     if not hf_endpoint.startswith("https://"):
         hf_endpoint = f"https://{hf_endpoint}"
@@ -336,25 +303,13 @@ async def download_model(model, client_id, node):
     url = config_autotagger["models"][model]
     url = url.replace("{HF_ENDPOINT}", hf_endpoint)
     url = f"{url}/resolve/main/"
-    async with aiohttp.ClientSession(loop=asyncio.get_event_loop()) as session:
-        async def update_callback(perc):
-            nonlocal client_id
-            message = ""
-            if perc < 100:
-                message = f"Downloading {model}"
-            update_node_status(client_id, node, message, perc)
-
-        try:
-            await download_to_file(
-                f"{url}model.onnx", os.path.join(models_dir,f"{model}.onnx"), update_callback, session=session)
-            await download_to_file(
-                f"{url}selected_tags.csv", os.path.join(models_dir,f"{model}.csv"), update_callback, session=session)
-        except aiohttp.client_exceptions.ClientConnectorError as err:
-            log("Unable to download model. Download files manually or try using a HF mirror/proxy website by setting the environment variable HF_ENDPOINT=https://.....", "ERROR", True)
-            raise
-
-        update_node_status(client_id, node, None)
-
+    try:
+        download_to_file(f"{url}model.onnx", os.path.join(models_dir,f"{model}.onnx"))
+        download_to_file(f"{url}selected_tags.csv", os.path.join(models_dir,f"{model}.csv"))
+    except Exception as err:
+        log("Unable to download model. Download files manually or try using a HF mirror/proxy website by setting the environment variable HF_ENDPOINT=https://.....", "ERROR", True)
+        raise
+    update_node_status(client_id, node, None)
     return web.Response(status=200)
 
 @PromptServer.instance.routes.get("/levelpixeladvanced/autotagger/tag")
@@ -409,13 +364,10 @@ class Autotagger:
     def tag(self, image, model, threshold, character_threshold, exclude_tags="", replace_underscore=False, trailing_comma=False):
         tensor = image*255
         tensor = np.array(tensor, dtype=np.uint8)
-
-        pbar = comfy.utils.ProgressBar(tensor.shape[0])
         tags = []
         for i in range(tensor.shape[0]):
-            image = Image.fromarray(tensor[i])
-            tags.append(wait_for_async(lambda: tag(image, model, threshold, character_threshold, exclude_tags, replace_underscore, trailing_comma)))
-            pbar.update(1)
+            img = Image.fromarray(tensor[i])
+            tags.append(tag(img, model, threshold, character_threshold, exclude_tags, replace_underscore, trailing_comma))
         return {"ui": {"tags": tags}, "result": (tags,)}
 
 NODE_CLASS_MAPPINGS = {
