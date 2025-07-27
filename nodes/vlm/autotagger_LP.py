@@ -11,7 +11,6 @@ import folder_paths
 import json
 import shutil
 import inspect
-from tqdm import tqdm
 
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "comfy"))
 
