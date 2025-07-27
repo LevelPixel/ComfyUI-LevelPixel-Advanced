@@ -14,5 +14,5 @@
     "Image Remove Background (BiRefNet) [LP]":"Removes background for images with user-defined model type of BiRefNet. Recommended for fast and high-quality background removal",
     "Image Remove Background (RMBG) [LP]":"Removes background for images with user-defined model. This node uses the RMBG models. Recommended for ultra-high precision",
     "Color Input [LP]":"Color Input for remove background nodes.",
-    "Multimodal Generator Advanced [LP]":"Node for Multimodal neural models based on GGUF. Supports Qwen2.5-VL of GGUF format. Based on llama-mtmd."
+    "Multimodal Generator Advanced [LP]":"Node for Multimodal neural models based on GGUF. Supports Qwen2.5-VL of GGUF format."
 }

@@ -4,7 +4,7 @@
 
 The purpose of this package is to collect the most necessary and atomic nodes for working with LLM and VLM models with GGUF format. Installation and maintenance of LLM and VLM nodes based on LLaVA is more complex, so this node package should now be installed separately from the main Level Pixel node package.
 
-*[Our dream is to see object-oriented programming in ComfyUI. We will try to get closer to it.](https://www.patreon.com/LevelPixel)*
+*[Our dream is to see the possibilities for convenient creation of full automation in ComfyUI workflows. We will try to get closer to it.](https://www.patreon.com/LevelPixel)*
 
 **In this Level Pixel Advanced node pack you will find:**
 LLM nodes, LLaVa and other VLM nodes, Autotagger, RAM autotagger, WD Autotagger
@@ -41,14 +41,6 @@ Before running ComfyUI with this node package, you should make sure that you hav
     - C++ Cmake tools for Windows
     - C++ Cmake tools for Linux and Mac
 3. Download [CMAKE official distribution](https://cmake.org/download) - install the latest version.
-4. Download [llama-mtmd-cli](https://github.com/ggml-org/llama.cpp/releases/tag/b5317) - if you want to use Qwen2.5-VL gguf in Multimodal Generator Advanced node.\
-  Choose the archive that suits your system. Probably, for you it will be `llama-b5317-bin-win--cu12.4-x64.zip`\
-  IMPORTANT - download only `b5317` realese. There are still some output errors on new versions\
-  After downloading, go to the path:\
-  `ComfyUI\custom_nodes\ComfyUI-LevelPixel-Advanced\nodes\vlm\llama-mtmd-cli`\
-  And unzip the downloaded archive here.\
-  The llama-mtmd-cli folder should contain the llama-mtmd-cli.exe file and other libraries from the archive:\
-  `ComfyUI\custom_nodes\ComfyUI-LevelPixel-Advanced\nodes\vlm\llama-mtmd-cli\llama-mtmd-cli.exe`\
 
 ### Installation package using ComfyUI Manager (recommended):
 
@@ -114,8 +106,8 @@ All nodes Level Pixel:
 
 ### Multimodal Generator node
 
-Multimodal Generator Advanced - New node on new technology of multimodal neural models based on GGUF. Supports Qwen2.5-VL of GGUF format.
-Experimental node! It is not recommended to use it in fully autonomous workflows yet.
+Multimodal Generator Advanced - New node on new technology of multimodal neural models based on GGUF.
+Supports Qwen2.5-VL of GGUF format.
 
 How to use Multimodal Generator node:
 
@@ -142,7 +134,7 @@ Our LLava nodes support the latest LLM and VLM models, and should support future
 
 The core functionality is taken from [ComfyUI_VLM_nodes](https://github.com/gokayfem/ComfyUI_VLM_nodes) and belongs to its authors.
 
-Mainly supports only Mistral (with clip for images) and Llama (with clip for images) models. 
+Mainly supports Qwen2.5-VL (with clip for images), Mistral (with clip for images) and Llama (with clip for images) models.
 
 At the moment the nodes are obsolete (but still in support status), instead of them it is supposed to develop "Multimodal Generator nodes" based on llama-mtmd for using Qwen2.5-VL, Bagel and other multimodal neural networks.
 
@@ -197,10 +189,11 @@ This is an image recognition node for [ComfyUI](https://github.com/comfyanonymou
 
 Furthermore you need to download the [RAM](https://huggingface.co/xinyu1205/recognize_anything_model/resolve/main/ram_swin_large_14m.pth), [RAM++](https://huggingface.co/xinyu1205/recognize-anything-plus-model/resolve/main/ram_plus_swin_large_14m.pth) and [tag2text](https://huggingface.co/xinyu1205/recognize_anything_model/resolve/main/tag2text_swin_14m.pth) models and place it in the /ComfyUI/models/rams/ folder or use the [ComfyUI-Manager](https://github.com/Comfy-Org/ComfyUI-Manager) model downloader.
 
-You can also configure the location in 'extra\_model\_paths.yaml' in the Confyui folder.
+You can also configure the location in 'extra\_model\_paths.yaml' in the ComfyUI folder.
 
 ## Update History
 
+27-07-2025 - Multimodal Generator Advanced stabilized by natively using the latest version of the llama-cpp-python library
 30-05-2025 - Added new node Multimodal Generation Advanced for neural models of multimodal type (for example, for Qwen2.5-VL)
 
 The license for this package has been changed from Apache 2.0 to GNU GPLv3

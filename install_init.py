@@ -13,6 +13,10 @@ import subprocess
 import sys
 from importlib import metadata
 
+package_name_llama_cpp_python = "llama-cpp-python"
+min_version_llama_cpp_python = "0.3.14"
+version_llama_cpp_python =   f"{package_name_llama_cpp_python}>={min_version_llama_cpp_python}"
+
 def verify_python_support():
     version = tuple(map(int, platform.python_version_tuple()[:2]))
     if version < (3, 8):
@@ -120,7 +124,7 @@ def install_llama(system_info):
     if not verify_pypy_support(system_info):
         print("WARNING: Unsupported PyPy configuration")
 
-    imported = package_is_installed("llama-cpp-python") or package_is_installed("llama_cpp")
+    imported = is_installed(package_name_llama_cpp_python, min_version_llama_cpp_python) # or package_is_installed("llama_cpp")
     if imported:
         print("llama-cpp installed")
         return True
@@ -129,7 +133,7 @@ def install_llama(system_info):
     if system_info['os'] == 'linux':
         try:
             print("Installing llama-cpp-python via pip")
-            install_package("llama-cpp-python")
+            install_package(version_llama_cpp_python)
             return True
         except Exception as e:
             print(f"Installation failed: {e}")
@@ -158,7 +162,7 @@ def install_llama(system_info):
         if system_info.get('metal', False):
             print("Building llama-cpp-python from source with Metal support")
             os.environ['CMAKE_ARGS'] = "-DGGML_METAL=on"
-            install_package("llama-cpp-python")
+            install_package(version_llama_cpp_python)
             return True
         elif system_info['gpu']:
             if system_info.get('cuda_version'):
@@ -169,12 +173,12 @@ def install_llama(system_info):
                     os.environ['CMAKE_ARGS'] = "-DGGML_CUDA=on -DGGML_CUDA_ZLUDA=on"
                 else:
                     os.environ['CMAKE_ARGS'] = "-DGGML_CUDA=on"
-                install_package("llama-cpp-python")
+                install_package(version_llama_cpp_python)
                 return True
             elif system_info.get('rocm_version'):
                 print("Building llama-cpp-python from source with ROCm support")
                 os.environ['CMAKE_ARGS'] = "-DGGML_HIPBLAS=on"
-                install_package("llama-cpp-python")
+                install_package(version_llama_cpp_python)
                 return True
     except Exception as e:
         print(f"Accelerated build failed: {e}")
@@ -183,7 +187,7 @@ def install_llama(system_info):
     # Final fallback - basic CPU version
     try:
         print("Installing CPU-only version")
-        install_package("llama-cpp-python")
+        install_package(version_llama_cpp_python)
         return True
     except Exception as e:
         print(f"CPU installation failed: {e}")
