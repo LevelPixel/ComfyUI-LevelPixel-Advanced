@@ -14,7 +14,7 @@ import sys
 from importlib import metadata
 
 package_name_llama_cpp_python = "llama-cpp-python"
-min_version_llama_cpp_python = "0.3.14"
+min_version_llama_cpp_python = "0.3.16"
 version_llama_cpp_python =   f"{package_name_llama_cpp_python}>={min_version_llama_cpp_python}"
 
 def verify_python_support():

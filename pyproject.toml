@@ -1,7 +1,7 @@
 [project]
 name = "comfyui-levelpixel-advanced"
 description = "Advanced nodes of the Level Pixel company (aka levelpixel, LP). Includes convenient advanced nodes for working with LLM и VLM models (LLaVa, Multimodal Generator) with GGUF format. Qwen2.5-VL and Qwen2.5 supported. Also included is a node for the RAM model. Nodes have the ability to automatically unload models from VRAM. This package also includes Autotagger (WD), Image Remove Background (based on RMBG-2.0, on BiRefNet, on BiRefNet-HR-Matter, on RemBG). Licensed under GNU GPLv3. Repository: https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced"
-version = "1.3.2"
+version = "1.3.3"
 license = { file = "LICENSE.txt" }
 dependencies = [
     "torch>=2.0.1", 
