@@ -9,20 +9,20 @@ The purpose of this package is to collect the most necessary and atomic nodes fo
 **In this Level Pixel Advanced node pack you will find:**
 LLM nodes, LLaVa and other VLM nodes, Autotagger, RAM autotagger, WD Autotagger
 
-Recommend that you install the main node package from Level Pixel:\
+Recommend that you install the main node package from Level Pixel:
 [https://github.com/LevelPixel/ComfyUI-LevelPixel](https://github.com/LevelPixel/ComfyUI-LevelPixel)
 
-The official repository of the current node package is located at this link:\
+The official repository of the current node package is located at this link:
 [https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced](https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced)
 
 **Like our nodes? Then we'd be happy to see your star on our GitHub repository!**
 
 ## Contacts, services and support
 
-Our official Patreon page:\
+Our official Patreon page:
 [https://www.patreon.com/LevelPixel](https://www.patreon.com/LevelPixel)
 
-On Patreon you can get services from us on issues related to ComfyUI, Forge, programming and AI tools. 
+On Patreon you can get services from us on issues related to ComfyUI, Forge, programming and AI tools.
 You can also support our project and support the development of our node packages.
 
 For cooperation, suggestions and ideas you can write to email:
@@ -34,13 +34,24 @@ For cooperation, suggestions and ideas you can write to email:
 
 Before running ComfyUI with this node package, you should make sure that you have the following programs and libraries installed so that ComfyUI can compile the necessary libraries and programs for llama-cpp-python (the main library that allows you to use any current GGUF models and neural network architectures):
 
-1. Download [CUDA drivers](https://developer.nvidia.com/cuda-downloads) - install the latest version.
-2. Download [Visual Studio 2022 Community IDE](https://visualstudio.microsoft.com/downloads) with libraries for compiling C++ programs, specifically with individual components (select them in Visual Studio Installer when installing/modifying Visual Studio 2022):
-    - MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
-    - MSVC v143 - VS 2022 C++ x64/x86 build tools (v14.38-17.8)
-    - C++ Cmake tools for Windows
-    - C++ Cmake tools for Linux and Mac
-3. Download [CMAKE official distribution](https://cmake.org/download) - install the latest version.
+1. Download [CUDA driver](https://developer.nvidia.com/cuda-12-9-0-download-archive) - install the 12.9 version (versions 13.0 and newer are not supported at this time).
+   After installation, make sure the following lines are in the Path field of System Environment Variables:\
+   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`\
+   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\bin`
+
+   And in System Environment Variables, add the `CMAKE_ARGS` variable and set it to the following:\
+   `-DGGML_CUDA=on -DCMAKE_GENERATOR_TOOLSET='cuda=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9'`
+
+2. Download [Visual Studio 2022 Community IDE](https://visualstudio.microsoft.com/downloads) with libraries for compiling C++ programs, specifically with individual components (select them in Visual Studio Installer when installing/modifying Visual Studio 2022):\
+   For Windows 10/11:
+   - MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
+   - C++ Cmake tools for Windows
+
+3. Download [CMAKE official distribution](https://cmake.org/download) - install the latest version.\
+   After installation, make sure that the Environment Variables line in Path is:\
+   `C:\Program Files\CMake\bin`
+
+It is also recommended to update ComfyUI to the latest version (including all dependencies) by running the file ComfyUI\update\update_comfyui_and_python_dependencies.bat (don't forget to press enter after the download of the latest libraries is complete)
 
 ### Installation package using ComfyUI Manager (recommended):
 
@@ -49,8 +60,8 @@ The nodes of the current package will be updated automatically when you click "U
 
 ### Alternative installation package
 
-Clone the repository:
-`git clone https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced.git`
+Clone the repository:\
+`git clone https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced.git`\
 to your ComfyUI `custom_nodes` directory
 
 The script will then automatically install all custom scripts and nodes.
@@ -71,10 +82,9 @@ If you have problems running ComfyUI with this node package, check and do the fo
 - The path to the current version of your CUDA must be at the very top of the **Path** list in the **System environment variables** (right after Cmake). Make sure that the path is at the top of the Path in the System variables, and not only in the user variables.
   Here are the paths that should be in Path for CUDA (this is an example, substitute your CUDA version for "12.9"):
 
-  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`
+  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`\
   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\bin`
-
-- In System environment variables, add the `CMAKE_ARGS` variable and set it to the following:
+- In System environment variables, add the `CMAKE_ARGS` variable and set it to the following:\
   `-DGGML_CUDA=on -DCMAKE_GENERATOR_TOOLSET='cuda=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9'`
 
 Save the changes made to System environment variables.
@@ -91,16 +101,25 @@ If you still get errors, restart your PC, this may help (sometimes during instal
 
 Regarding onnxruntime - usually, various node packages install the onnxruntime library instead of the onnxruntime-gpu package if your computer has a GPU. Some other packages may install onnxruntime-gpu by default. However, due to the strange implementation of the library by its authors, we have a contradiction between onnxruntime-gpu and onnxruntime, which leads to errors when running ComfyUI.
 
-To fix the error with onnxruntime that you may have, you can use the script at the path (only for Windows!):
+To fix the error with onnxruntime that you may have, you can use the script at the path (only for Windows!):\
 `.\ComfyUI\custom_nodes\ComfyUI-LevelPixel-Advanced\scripts\remove_onnxruntime.bat`
 
 After which you need to run ComfyUI again, our node package should automatically install the correct version of onnxruntime for your system.
 
 If these tips don't help - study the logs and the cause of the error, read docs about building llama.cpp [https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md](https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md), and then talk to some powerful neural network about this error - it will probably help you solve your problem.
 
+If examining the logs doesn't help, remove all the components listed below from the system and repeat the steps above.
+What needs to be removed:
+- Uninstall MSVC (uncheck the box in the VS Installer's Modify mode for Visual Studio 2022 and confirm the changes), restart the PC.
+- Uninstall all CUDA drivers and the NVIDIA toolkit using the standard Windows uninstaller, then restart the PC.
+- Remove all obsolete or unnecessary paths from the Path in System Environment Variables.
+- Download the latest new version of ComfyUI and update it.
+
+After that, follow the instructions above again.
+
 ## Features
 
-All nodes Level Pixel:
+All nodes Level Pixel Advanced:
 
 ![level-pixel-advanced-nodes_2](https://github.com/user-attachments/assets/792e43d8-fd96-4a27-bf4b-db84261b6014)
 
@@ -111,19 +130,18 @@ Supports Qwen2.5-VL of GGUF format.
 
 How to use Multimodal Generator node:
 
-1. **Download the Qwen 2.5 VL gguf file**:  
-   [https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/tree/main](https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/tree/main)  
-   Choose a gguf file **without** the mmproj in the name  
-   Example gguf file:  
-   [https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-q8_0.gguf](https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-q8_0.gguf)  
+1. **Download the Qwen 2.5 VL gguf file**:\
+   [https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/tree/main](https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/tree/main)\
+   Choose a gguf file **without** the mmproj in the name
+   Example gguf file:\
+   [https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-q8_0.gguf](https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-q8_0.gguf)\
    Copy this file to ComfyUI/models/LLavacheckpoints.
-2. **Download the Qwen 2.5 VL mmproj file (this is clip model):**  
-   [https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/tree/main](https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/tree/main)  
-   Choose a file **with** mmproj in the name  
-   Example mmproj file:  
-   [https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-mmproj-bf16.gguf](https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-mmproj-bf16.gguf)  
-   Copy this file to ComfyUI/models/LLavacheckpoints.  
-
+2. **Download the Qwen 2.5 VL mmproj file (this is clip model):**\
+   [https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/tree/main](https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/tree/main)\
+   Choose a file **with** mmproj in the name.\
+   Example mmproj file:\
+   [https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-mmproj-bf16.gguf](https://huggingface.co/Mungert/Qwen2.5-VL-7B-Instruct-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-mmproj-bf16.gguf)\
+   Copy this file to ComfyUI/models/LLavacheckpoints.
 3. **Run ComfyUI and add to workflow node Multimodal Generator Advanced [LP]. Choose ckpt model and clip, pin image and write prompt.**
 
 ### LLaVa nodes
@@ -160,7 +178,7 @@ A more improved version of nodes for removing background for ComfyUI with an ext
 
 There are three separate nodes that implement different functionality for different neural models:
 
-- `Image Remove Background (RMBG)` - RECOMMENDED! The most powerful node to use, which uses the most powerful model RMBG-2.0 for background removal. 
+- `Image Remove Background (RMBG)` - RECOMMENDED! The most powerful node to use, which uses the most powerful model RMBG-2.0 for background removal.
 - `Image Remove Background (BiRefNet)` - Recommended for super-fast background removal with high quality. Uses the latest generation BiRefNet models that perfectly remove any background in a fraction of a second on the GPU.
 - `Image Remove Background (rembg)` - Not recommended for normal use and requires additional settings (read below). It differs in that it allows you to include other special types of neural networks to remove the background in certain situations, but the models will not always be the latest generation for this node.
 

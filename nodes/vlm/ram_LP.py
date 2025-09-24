@@ -4,6 +4,20 @@ import gc
 import numpy as np
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning, module="timm\\.models")
+import sys
+import transformers
+import types
+
+wrapper = types.ModuleType("transformers.modeling_utils")
+
+for k, v in transformers.pytorch_utils.__dict__.items():
+    setattr(wrapper, k, v)
+
+for k, v in transformers.modeling_utils.__dict__.items():
+    if not hasattr(wrapper, k):
+        setattr(wrapper, k, v)
+
+sys.modules["transformers.modeling_utils"] = wrapper
 
 from ram.models import ram
 from ram.models import ram_plus

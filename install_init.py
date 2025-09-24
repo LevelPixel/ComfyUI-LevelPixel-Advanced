@@ -4,13 +4,12 @@ import shutil
 import platform
 import subprocess
 import sys
+import importlib
 import importlib.util
 import re
 import inspect
 from requests import get
 from server import PromptServer
-import subprocess
-import sys
 from importlib import metadata
 
 package_name_llama_cpp_python = "llama-cpp-python"
@@ -107,7 +106,7 @@ def latest_lamacpp():
         return "0.2.20"
 
 def install_package(package_name, extra_args=None):
-    command = [sys.executable, "-m", "pip", "install", package_name, "--no-cache-dir"]
+    command = [sys.executable, "-m", "pip", "install", "-vvv", "--no-build-isolation", package_name, "--no-cache-dir", "--force-reinstall"]
     if extra_args:
         command.extend(extra_args.split())
     print("WARNING: Building the llama-cpp-python wheels can take UP TO AN HOUR due to the specific build conditions. This is not an error, just wait.")
@@ -115,6 +114,21 @@ def install_package(package_name, extra_args=None):
 
 def package_is_installed(package_name):
     return importlib.util.find_spec(package_name) is not None
+
+def ensure_torch():
+    try:
+        importlib.import_module("torch")
+    except ImportError:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "torch"])
+        importlib.invalidate_caches()
+
+def get_cc():
+    ensure_torch()
+    import torch
+    if not torch.cuda.is_available():
+        raise RuntimeError("CUDA is unavailable")
+    major, minor = torch.cuda.get_device_capability(0)
+    return f"{major}{minor}"
 
 def install_llama(system_info):
     if not verify_python_support():
@@ -159,6 +173,7 @@ def install_llama(system_info):
 
     # Build from source with appropriate acceleration
     try:
+           
         if system_info.get('metal', False):
             print("Building llama-cpp-python from source with Metal support")
             os.environ['CMAKE_ARGS'] = "-DGGML_METAL=on"
@@ -166,13 +181,15 @@ def install_llama(system_info):
             return True
         elif system_info['gpu']:
             if system_info.get('cuda_version'):
+                cc = get_cc()
+                print("Compute Capability:", cc)
                 print("Building llama-cpp-python from source with CUDA support")
                 # Add ZLUDA support check
                 if os.environ.get('ZLUDA_PATH'):
                     print("ZLUDA detected, building with ZLUDA support")
-                    os.environ['CMAKE_ARGS'] = "-DGGML_CUDA=on -DGGML_CUDA_ZLUDA=on"
+                    os.environ['CMAKE_ARGS'] = f"-DGGML_CUDA=on -DGGML_CUDA_ZLUDA=on -DCMAKE_CUDA_ARCHITECTURES={cc}"
                 else:
-                    os.environ['CMAKE_ARGS'] = "-DGGML_CUDA=on"
+                    os.environ['CMAKE_ARGS'] = f"-DGGML_CUDA=on -DCMAKE_CUDA_ARCHITECTURES={cc}"
                 install_package(version_llama_cpp_python)
                 return True
             elif system_info.get('rocm_version'):
