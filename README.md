@@ -9,10 +9,10 @@ The purpose of this package is to collect the most necessary and atomic nodes fo
 **In this Level Pixel Advanced node pack you will find:**
 LLM nodes, LLaVa and other VLM nodes, Autotagger, RAM autotagger, WD Autotagger
 
-Recommend that you install the main node package from Level Pixel:
+Recommend that you install the main node package from Level Pixel: 
 [https://github.com/LevelPixel/ComfyUI-LevelPixel](https://github.com/LevelPixel/ComfyUI-LevelPixel)
 
-The official repository of the current node package is located at this link:
+The official repository of the current node package is located at this link: 
 [https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced](https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced)
 
 **Like our nodes? Then we'd be happy to see your star on our GitHub repository!**
@@ -35,39 +35,39 @@ For cooperation, suggestions and ideas you can write to email:
 Before running ComfyUI with this node package, you should make sure that you have the following programs and libraries installed so that ComfyUI can compile the necessary libraries and programs for llama-cpp-python (the main library that allows you to use any current GGUF models and neural network architectures):
 
 1. Download [CUDA driver](https://developer.nvidia.com/cuda-12-9-0-download-archive) - install the 12.9 version (versions 13.0 and newer are not supported at this time).
-   After installation, make sure the following lines are in the Path field of System Environment Variables:\
-   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`\
-   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\bin`
+   After installation, make sure the following lines are in the Path field of System Environment Variables:  
+   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`  
+   `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\bin`  
 
-   And in System Environment Variables, add the `CMAKE_ARGS` variable and set it to the following:\
+   And in System Environment Variables, add the `CMAKE_ARGS` variable and set it to the following:  
    `-DGGML_CUDA=on -DCMAKE_GENERATOR_TOOLSET='cuda=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9'`
 
-2. Download [Visual Studio 2022 Community IDE](https://visualstudio.microsoft.com/downloads) with libraries for compiling C++ programs, specifically with individual components (select them in Visual Studio Installer when installing/modifying Visual Studio 2022):\
+2. Download [Visual Studio 2022 Community IDE](https://visualstudio.microsoft.com/downloads) with libraries for compiling C++ programs, specifically with individual components (select them in Visual Studio Installer when installing/modifying Visual Studio 2022):  
    For Windows 10/11:
    - MSVC v143 - VS 2022 C++ x64/x86 build tools (Latest)
    - C++ Cmake tools for Windows
 
-3. Download [CMAKE official distribution](https://cmake.org/download) - install the latest version.\
-   After installation, make sure that the Environment Variables line in Path is:\
+3. Download [CMAKE official distribution](https://cmake.org/download) - install the latest version.  
+   After installation, make sure that the Environment Variables line in Path is:  
    `C:\Program Files\CMake\bin`
 
 It is also recommended to update ComfyUI to the latest version (including all dependencies) by running the file ComfyUI\update\update_comfyui_and_python_dependencies.bat (don't forget to press enter after the download of the latest libraries is complete)
 
 ### Installation package using ComfyUI Manager (recommended):
 
-Install [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager) and do steps introduced there to install this repo 'ComfyUI-LevelPixel-Advanced'.
+Install [ComfyUI Manager](https://github.com/ltdrdata/ComfyUI-Manager) and do steps introduced there to install this repo 'ComfyUI-LevelPixel-Advanced'.  
 The nodes of the current package will be updated automatically when you click "Update ALL" in ComfyUI Manager.
 
 ### Alternative installation package
 
-Clone the repository:\
-`git clone https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced.git`\
+Clone the repository:  
+`git clone https://github.com/LevelPixel/ComfyUI-LevelPixel-Advanced.git`  
 to your ComfyUI `custom_nodes` directory
 
 The script will then automatically install all custom scripts and nodes.
 It will attempt to use symlinks and junctions to prevent having to copy files and keep them up to date.
 
-- For uninstallation:
+- For uninstallation:  
   - Delete the cloned repo in `custom_nodes`
   - Ensure `web/extensions/levelpixeladvanced` has also been removed
 - For manual update:
@@ -82,8 +82,8 @@ If you have problems running ComfyUI with this node package, check and do the fo
 - The path to the current version of your CUDA must be at the very top of the **Path** list in the **System environment variables** (right after Cmake). Make sure that the path is at the top of the Path in the System variables, and not only in the user variables.
   Here are the paths that should be in Path for CUDA (this is an example, substitute your CUDA version for "12.9"):
 
-  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`\
-  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\bin`
+  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\libnvvp`  
+  `C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9\bin`  
 - In System environment variables, add the `CMAKE_ARGS` variable and set it to the following:\
   `-DGGML_CUDA=on -DCMAKE_GENERATOR_TOOLSET='cuda=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v12.9'`
 
@@ -211,7 +211,7 @@ You can also configure the location in 'extra\_model\_paths.yaml' in the ComfyUI
 
 ## Update History
 
-27-07-2025 - Multimodal Generator Advanced stabilized by natively using the latest version of the llama-cpp-python library
+27-07-2025 - Multimodal Generator Advanced stabilized by natively using the latest version of the llama-cpp-python library 
 30-05-2025 - Added new node Multimodal Generation Advanced for neural models of multimodal type (for example, for Qwen2.5-VL)
 
 The license for this package has been changed from Apache 2.0 to GNU GPLv3
